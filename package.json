@@ -15,9 +15,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/febsnow/goit-react-hw-02-phonebook.git"
+    "url": "git+https://github.com/febsnow/goit-react-hw-03-phonebook.git"
   },
-  "homepage": "https://febsnow.github.io/goit-react-hw-02-phonebook",
+  "homepage": "https://febsnow.github.io/goit-react-hw-03-phonebook",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
