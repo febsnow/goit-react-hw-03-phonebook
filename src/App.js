@@ -10,8 +10,8 @@ import "./App.css";
 
 class App extends Component {
   static propTypes = {
-    name: PropTypes.string.isRequired,
-    number: PropTypes.string.isRequired,
+    contacts: PropTypes.array.isRequired,
+    filter: PropTypes.string,
   };
 
   static defaultProps = {
@@ -70,6 +70,21 @@ class App extends Component {
       };
     });
   };
+
+  componentDidMount() {
+    const savedContacts = JSON.parse(localStorage.getItem("contacts"));
+
+    savedContacts && this.setState({ contacts: savedContacts });
+    // savedContacts
+    //   ? this.setState({ contacts: savedContacts })
+    //   : localStorage.setItem("contacts", JSON.stringify(this.state.contacts));
+  }
+
+  componentDidUpdate(prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem("contacts", JSON.stringify(this.state.contacts));
+    }
+  }
 
   render() {
     const contacts = this.filtredContacts();
