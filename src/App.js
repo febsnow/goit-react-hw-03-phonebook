@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import uniqid from "uniqid";
-import Section from "./Components/Section/Section";
-import AddContactForm from "./Components/AddContactForm/AddContactForm";
-import ContactList from "./Components/ContactsList/ContactList";
-import Filter from "./Components/Filter/Filter";
+import Section from "./сomponents/Section/Section";
+import AddContactForm from "./сomponents/AddContactForm/AddContactForm";
+import ContactList from "./сomponents/ContactsList/ContactList";
+import Filter from "./сomponents/Filter/Filter";
 
 import "./App.css";
 
@@ -56,8 +56,9 @@ class App extends Component {
   };
 
   filtredContacts = () => {
-    return this.state.contacts.filter((contact) =>
-      contact.name.toLowerCase().includes(this.state.filter.toLowerCase())
+    const { contacts, filter } = this.state;
+    return contacts.filter((contact) =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
     );
   };
 
@@ -81,28 +82,32 @@ class App extends Component {
   }
 
   componentDidUpdate(prevState) {
-    if (this.state.contacts !== prevState.contacts) {
+    if (
+      this.state.contacts !== prevState.contacts &&
+      this.state.contacts.length > 0
+    ) {
       localStorage.setItem("contacts", JSON.stringify(this.state.contacts));
     }
   }
 
   render() {
-    const contacts = this.filtredContacts();
+    const contactsList = this.filtredContacts();
+    const { contacts, filter } = this.state;
 
     return (
       <div className="phoneBook">
         <Section title="Phonebook">
           <AddContactForm submitHandler={this.addNewContact} />
         </Section>
-        {this.state.contacts.length === 0 ? null : (
+        {contacts.length === 0 ? null : (
           <Section title="Contacts">
-            {this.state.contacts.length > 1 ? (
-              <Filter
-                value={this.state.filter}
-                changeHandler={this.filterContacts}
-              />
+            {contacts.length > 1 ? (
+              <Filter value={filter} changeHandler={this.filterContacts} />
             ) : null}
-            <ContactList list={contacts} handleRemove={this.removeContact} />
+            <ContactList
+              list={contactsList}
+              handleRemove={this.removeContact}
+            />
           </Section>
         )}
       </div>
